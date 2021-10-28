@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Barang extends Model
 {
     use HasFactory;
-    protected $fillabel = [
+    protected $fillable = [
         "nama_barang",
         "tipe_barang",
         "kuantitas",
