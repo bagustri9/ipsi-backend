@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\BarangController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,8 +12,12 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get("/barang",[BarangController::class, 'index']);
+// Route::group([
+//     'middleware' => ['cors']
+// ], function ($router) {
+//      //Add you routes here, for example:
+//      Route::get("/barang",[BarangController::class, 'index']);
+// });
 
 Route::get('/', function () {
     return view('abc');
