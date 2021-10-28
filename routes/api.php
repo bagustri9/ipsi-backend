@@ -18,8 +18,8 @@ use Illuminate\Support\Facades\Route;
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //     return $request->user();
 // });
-Route::group([
-    'middleware' => ['cors']
-], function ($router) {
-     Route::get("/barang",[BarangController::class, 'index']);
+Route::group(['middleware' => ['cors']], function ($router) {
+    Route::get("/barang",[BarangController::class, 'index']);
+    Route::get("/barang/{id}",[BarangController::class, 'show']);
+    Route::post("/barang",[BarangController::class, 'store']);
 });
