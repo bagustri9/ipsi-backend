@@ -21,5 +21,7 @@ use Illuminate\Support\Facades\Route;
 Route::group(['middleware' => ['cors']], function ($router) {
     Route::get("/barang",[BarangController::class, 'index']);
     Route::get("/barang/{id}",[BarangController::class, 'show']);
+    Route::get("/barang/{id}/delete",[BarangController::class, 'destroy']);
     Route::post("/barang",[BarangController::class, 'store']);
+    Route::put("/barang/{id}/update",[BarangController::class, 'update']);
 });

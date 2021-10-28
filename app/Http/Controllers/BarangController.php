@@ -55,9 +55,10 @@ class BarangController extends Controller
      * @param  \App\Models\Barang  $barang
      * @return \Illuminate\Http\Response
      */
-    public function show(Barang $barang)
+    public function show($id)
     {
-        //
+        $hasil = Barang::where('id', $id)->first();
+        return response()->json($hasil);
     }
 
     /**
@@ -78,9 +79,18 @@ class BarangController extends Controller
      * @param  \App\Models\Barang  $barang
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Barang $barang)
+    public function update(Request $request, $id)
     {
-        //
+         $updated = Barang::find($id)->update([
+            "nama_barang" => $request->input('nama_barang'),
+            "tipe_barang" => $request->input('tipe_barang'),
+            "kuantitas" => $request->input('kuantitas'),
+            "harga_rental" => $request->input('harga_rental'),
+            "deskripsi" => $request->input('deskripsi'),
+            "gambar" => $request->input('gambar')
+         ]);
+         
+         return response()->json($updated);
     }
 
     /**
@@ -89,8 +99,9 @@ class BarangController extends Controller
      * @param  \App\Models\Barang  $barang
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Barang $barang)
+    public function destroy($id)
     {
-        //
+        $deleted = Barang::find($id)->delete();
+        return response()->json($deleted);
     }
 }
