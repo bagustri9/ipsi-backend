@@ -14,7 +14,7 @@ class BarangController extends Controller
      */
     public function index()
     {
-        $data = Barang::get();
+        $data = Barang::orderBy("id")->get();
         return response()->json($data);
     }
 
