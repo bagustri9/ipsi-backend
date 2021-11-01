@@ -36,20 +36,12 @@ class BarangController extends Controller
      */
     public function store(Request $request)
     {
-        return response()->json($request);
         $fileName = "";
         if ($request->hasFile('gambar')) {
-            if ($request->file('gambar')->isValid()) {
-                $file = $request->file('gambar');
-                $extensi = $file->getClientOriginalExtension();
-                $fileName = time() . '.' . $extensi;
-                $file->move(public_path('assets/barang'), $fileName);
-            } else {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'ukuran file terlalu besar'
-                ]);
-            }
+            $file = $request->file('gambar');
+            $extensi = $file->getClientOriginalExtension();
+            $fileName = time() . '.' . $extensi;
+            $file->move(public_path('assets/barang'), $fileName);
         } else {
             return response()->json([
                 'success' => false,
@@ -62,9 +54,15 @@ class BarangController extends Controller
             "kuantitas" => 'required',
             "harga_rental" => 'required',
             "deskripsi" => 'required',
-            "gambar" => 'required'
         ]);
-        $data = Barang::create(array_merge($request->all(), ['gambar' => $fileName]));
+        $data = Barang::insert([
+            'nama_barang' => $request->nama_barang,
+            "tipe_barang" => $request->tipe_barang,
+            "kuantitas" => $request->kuantitas,
+            "harga_rental" => $request->harga_rental,
+            "deskripsi" => $request->deskripsi,
+            "gambar" => $fileName
+        ]);
 
         return response()->json($data);
     }
