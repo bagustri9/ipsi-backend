@@ -36,6 +36,26 @@ class BarangController extends Controller
      */
     public function store(Request $request)
     {
+        return response()->json($request);
+        $fileName = "";
+        if ($request->hasFile('gambar')) {
+            if ($request->file('gambar')->isValid()) {
+                $file = $request->file('gambar');
+                $extensi = $file->getClientOriginalExtension();
+                $fileName = time() . '.' . $extensi;
+                $file->move(public_path('assets/barang'), $fileName);
+            } else {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'ukuran file terlalu besar'
+                ]);
+            }
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'gagal'
+            ]);
+        }
         $request->validate([
             'nama_barang' => 'required',
             "tipe_barang" => 'required',
@@ -44,7 +64,7 @@ class BarangController extends Controller
             "deskripsi" => 'required',
             "gambar" => 'required'
         ]);
-        $data = Barang::create($request->all());
+        $data = Barang::create(array_merge($request->all(), ['gambar' => $fileName]));
 
         return response()->json($data);
     }
@@ -81,16 +101,16 @@ class BarangController extends Controller
      */
     public function update(Request $request, $id)
     {
-         $updated = Barang::find($id)->update([
+        $updated = Barang::find($id)->update([
             "nama_barang" => $request->input('nama_barang'),
             "tipe_barang" => $request->input('tipe_barang'),
             "kuantitas" => $request->input('kuantitas'),
             "harga_rental" => $request->input('harga_rental'),
             "deskripsi" => $request->input('deskripsi'),
             "gambar" => $request->input('gambar')
-         ]);
-         
-         return response()->json($updated);
+        ]);
+
+        return response()->json($updated);
     }
 
     /**
