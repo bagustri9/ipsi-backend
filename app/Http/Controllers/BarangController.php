@@ -99,13 +99,24 @@ class BarangController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $cari = Barang::find($id)->first();
+        $fileName = "";
+        if ($request->hasFile('gambar')) {
+            $file = $request->file('gambar');
+            $extensi = $file->getClientOriginalExtension();
+            $fileName = time() . '.' . $extensi;
+            $file->move(public_path('assets/barang'), $fileName);
+        }
+        else{
+            $fileName = $cari->gambar;
+        }
         $updated = Barang::find($id)->update([
             "nama_barang" => $request->input('nama_barang'),
             "tipe_barang" => $request->input('tipe_barang'),
             "kuantitas" => $request->input('kuantitas'),
             "harga_rental" => $request->input('harga_rental'),
             "deskripsi" => $request->input('deskripsi'),
-            "gambar" => $request->input('gambar')
+            "gambar" => $fileName
         ]);
 
         return response()->json($updated);
