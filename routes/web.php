@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Storage;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,4 +22,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('abc');
+});
+Route::get ('/test', function () {
+    $path = Storage::get("assets/barang/1636038824.png");
+    return "<img src='".$path."'>";
 });

@@ -36,12 +36,13 @@ class BarangController extends Controller
      */
     public function store(Request $request)
     {
+        // return response()->json($request);
         $fileName = "";
         if ($request->hasFile('gambar')) {
             $file = $request->file('gambar');
             $extensi = $file->getClientOriginalExtension();
             $fileName = time() . '.' . $extensi;
-            $file->move(public_path('assets/barang'), $fileName);
+            $file->move(storage_path('app/public/assets/barang'), $fileName);
         } else {
             return response()->json([
                 'success' => false,
