@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Barang;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class BarangController extends Controller
 {
@@ -106,7 +107,7 @@ class BarangController extends Controller
             $file = $request->file('gambar');
             $extensi = $file->getClientOriginalExtension();
             $fileName = time() . '.' . $extensi;
-            $file->move(public_path('assets/barang'), $fileName);
+            $file->move(storage_path('app/public/assets/barang'), $fileName);
         }
         else{
             $fileName = $cari->gambar;
