@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Barang;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class BarangController extends Controller
 {
@@ -36,12 +37,16 @@ class BarangController extends Controller
      */
     public function store(Request $request)
     {
+        return response()->json($request);
         $fileName = "";
         if ($request->hasFile('gambar')) {
             $file = $request->file('gambar');
             $extensi = $file->getClientOriginalExtension();
             $fileName = time() . '.' . $extensi;
-            $file->move(public_path('assets/barang'), $fileName);
+            $path = Storage::putFileAs(
+                'barang', $file, $fileName
+            );
+            return $path;
         } else {
             return response()->json([
                 'success' => false,
