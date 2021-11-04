@@ -24,8 +24,6 @@ Route::get('/', function () {
     return view('abc');
 });
 
-Auth::routes();
-
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/test', function (){
 	$contents = Storage::get('public/1635841162.png');
