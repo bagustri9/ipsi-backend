@@ -18,10 +18,11 @@ use Illuminate\Support\Facades\Route;
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //     return $request->user();
 // });
-// Route::post('/register',[AuthController::class,'register']);
+Route::post('/register',[AuthController::class,'register']);
 Route::group(['middleware' => ['cors']], function ($router) {
     Route::get("/barang",[BarangController::class, 'index']);
     Route::get("/barang/{id}",[BarangController::class, 'show']);
+    Route::get("/barang/{id}/filter",[BarangController::class, 'filter']);
     Route::get("/barang/{id}/delete",[BarangController::class, 'destroy']);
     Route::post("/barang",[BarangController::class, 'store']);
     Route::post("/barang/{id}/update",[BarangController::class, 'update']);

@@ -135,4 +135,21 @@ class BarangController extends Controller
         $deleted = Barang::find($id)->delete();
         return response()->json($deleted);
     }
+
+    public function filter($id)
+    {
+        $result = "";
+        switch($id) {
+            case 0: 
+                $result = Barang::orderBy("harga_rental", "asc")->get();
+                break;
+            case 1: 
+                $result = Barang::orderBy("harga_rental", "desc")->get();
+                break;
+            case 2: 
+                $result = Barang::where("tipe_barang", "Kamera")->get();
+                break;
+        }
+        return $result;
+    }
 }
