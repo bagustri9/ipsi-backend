@@ -167,25 +167,34 @@ class BarangController extends Controller
             case 0:
                 $result = Barang::orderBy("harga_rental", "asc")->get();
                 foreach ($result as $data) {
-                    $dataGambar = Gambar::where('id_barang', $data->id)->get();
-                    $data->gambar = $dataGambar;
+                    $datasGambar = Gambar::where('id_barang', $data->id)->get();
+                    foreach ($datasGambar as $dataGambar) {
+                        $dataGambar->url = URL::to('/') . Storage::url('public/assets/barang/' . $dataGambar->gambar);
+                    }
+                    $data->gambar = $datasGambar;
                 };
                 break;
             case 1:
                 $result = Barang::orderBy("harga_rental", "desc")->get();
                 foreach ($result as $data) {
-                    $dataGambar = Gambar::where('id_barang', $data->id)->get();
-                    $data->gambar = $dataGambar;
+                    $datasGambar = Gambar::where('id_barang', $data->id)->get();
+                    foreach ($datasGambar as $dataGambar) {
+                        $dataGambar->url = URL::to('/') . Storage::url('public/assets/barang/' . $dataGambar->gambar);
+                    }
+                    $data->gambar = $datasGambar;
                 };
                 break;
             case 2:
                 $result = Barang::where("tipe_barang", "Kamera")->get();
                 foreach ($result as $data) {
-                    $dataGambar = Gambar::where('id_barang', $data->id)->get();
-                    $data->gambar = $dataGambar;
+                    $datasGambar = Gambar::where('id_barang', $data->id)->get();
+                    foreach ($datasGambar as $dataGambar) {
+                        $dataGambar->url = URL::to('/') . Storage::url('public/assets/barang/' . $dataGambar->gambar);
+                    }
+                    $data->gambar = $datasGambar;
                 };
                 break;
         }
-        return $result;
+        return response()->json($result);
     }
 }
