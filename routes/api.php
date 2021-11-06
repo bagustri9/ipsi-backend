@@ -22,6 +22,7 @@ use Illuminate\Support\Facades\Storage;
 Route::post('/register',[AuthController::class,'register']);
 Route::group(['middleware' => ['cors']], function ($router) {
     Route::get("/barang",[BarangController::class, 'index']);
+    Route::get("/barang/search_query={nama}",[BarangController::class, 'find']);
     Route::get("/barang/{id}",[BarangController::class, 'show']);
     Route::get("/barang/{id}/filter",[BarangController::class, 'filter']);
     Route::get("/barang/{id}/delete",[BarangController::class, 'destroy']);

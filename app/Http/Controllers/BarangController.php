@@ -194,7 +194,60 @@ class BarangController extends Controller
                     $data->gambar = $datasGambar;
                 };
                 break;
+            case 3:
+                $result = Barang::where("tipe_barang", "Lensa")->get();
+                foreach ($result as $data) {
+                    $datasGambar = Gambar::where('id_barang', $data->id)->get();
+                    foreach ($datasGambar as $dataGambar) {
+                        $dataGambar->url = URL::to('/') . Storage::url('public/assets/barang/' . $dataGambar->gambar);
+                    }
+                    $data->gambar = $datasGambar;
+                };
+                break;
+            case 4:
+                $result = Barang::where("tipe_barang", "Audio")->get();
+                foreach ($result as $data) {
+                    $datasGambar = Gambar::where('id_barang', $data->id)->get();
+                    foreach ($datasGambar as $dataGambar) {
+                        $dataGambar->url = URL::to('/') . Storage::url('public/assets/barang/' . $dataGambar->gambar);
+                    }
+                    $data->gambar = $datasGambar;
+                };
+                break;
+            case 5:
+                $result = Barang::where("tipe_barang", "Lighting")->get();
+                foreach ($result as $data) {
+                    $datasGambar = Gambar::where('id_barang', $data->id)->get();
+                    foreach ($datasGambar as $dataGambar) {
+                        $dataGambar->url = URL::to('/') . Storage::url('public/assets/barang/' . $dataGambar->gambar);
+                    }
+                    $data->gambar = $datasGambar;
+                };
+                break;
+            case 6:
+                $result = Barang::where("tipe_barang", "Tripod")->get();
+                foreach ($result as $data) {
+                    $datasGambar = Gambar::where('id_barang', $data->id)->get();
+                    foreach ($datasGambar as $dataGambar) {
+                        $dataGambar->url = URL::to('/') . Storage::url('public/assets/barang/' . $dataGambar->gambar);
+                    }
+                    $data->gambar = $datasGambar;
+                };
+                break;
         }
+        return response()->json($result);
+    }
+
+    public function find($nama)
+    {
+        $result = Barang::where("nama_barang", "like", "%$nama%")->get();
+        foreach ($result as $data) {
+            $datasGambar = Gambar::where('id_barang', $data->id)->get();
+            foreach ($datasGambar as $dataGambar) {
+                $dataGambar->url = URL::to('/') . Storage::url('public/assets/barang/' . $dataGambar->gambar);
+            }
+            $data->gambar = $datasGambar;
+        };
         return response()->json($result);
     }
 }
