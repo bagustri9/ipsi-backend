@@ -17,9 +17,6 @@ use Illuminate\Support\Facades\Storage;
 |
 */
 
-// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
 Route::group(['middleware' => ['cors']], function ($router) {
     Route::post('/register',[AuthController::class,'register']);
     Route::get("/barang/search_query={nama}",[BarangController::class, 'find']);
@@ -29,8 +26,8 @@ Route::group(['middleware' => ['cors']], function ($router) {
     Route::post("/barang",[BarangController::class, 'store']);
     Route::post("/barang/{id}/update",[BarangController::class, 'update']);
     Route::post("/login",[AuthController::class, 'login']);
+    Route::get("/barang",[BarangController::class, 'index']);
 });
 Route::group(['middleware' => ['auth:sanctum']], function ($router) {
-    Route::get("/barang",[BarangController::class, 'index']);
     Route::post("/logout",[AuthController::class, 'logout']);
 });
