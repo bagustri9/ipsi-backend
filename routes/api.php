@@ -25,6 +25,7 @@ Route::group(['middleware' => ['cors']], function ($router) {
     Route::get("/barang/{id}/delete",[BarangController::class, 'destroy']);
     Route::post("/barang",[BarangController::class, 'store']);
     Route::post("/barang/{id}/update",[BarangController::class, 'update']);
+    Route::get("/barang",[BarangController::class, 'index']);
     Route::post("/login",[AuthController::class, 'login']);
     Route::get("/barang",[BarangController::class, 'index']);
 });
