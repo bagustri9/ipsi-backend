@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\Storage;
 //     return $request->user();
 // });
 Route::post('/register',[AuthController::class,'register']);
+Route::post('/login',[AuthController::class,'login']);
 Route::group(['middleware' => ['cors']], function ($router) {
     Route::get("/barang",[BarangController::class, 'index']);
     Route::get("/barang/search_query={nama}",[BarangController::class, 'find']);
