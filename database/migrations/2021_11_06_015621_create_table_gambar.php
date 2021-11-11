@@ -30,6 +30,6 @@ class CreateTableGambar extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('table_gambar');
+        Schema::dropIfExists('gambar');
     }
 }

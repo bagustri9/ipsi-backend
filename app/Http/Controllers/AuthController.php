@@ -6,21 +6,25 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
     public function register(Request $request)
     {
+        $request->validate([
+            'nama_lengkap' => 'required',
+            'email' => 'required|unique:users',
+            'phone' => 'required',
+            'password' => 'required|confirmed|min:8',
+        ]);
+
         $user = User::create([
-            'username' => $request->username,
+            'nama_lengkap' => $request->nama_lengkap,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'role' => 'User',
-            'nama_lengkap' => 'Nama Lengkap',
-            'phone' => '083',
-            'alamat' => 'Alamat',
-            'gender' => 'L',
-            'tanggal_hahir' => '2021-11-09 13:14:25'
+            'phone' => $request->phone,
+            'role' => 'User'
         ]);
 
         $token = $user->createToken('token')->plainTextToken;
