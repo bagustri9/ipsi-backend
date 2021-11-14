@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\URL;
 
 class UserController extends Controller
@@ -37,5 +38,23 @@ class UserController extends Controller
                 'message' => 'gagal'
             ]);
         }
+    }
+
+    public function update(Request $request, $id)
+    {
+        $updated = User::find($id)->update([
+            "email" => $request->input('email'),
+            "password" => Hash::make($request->password),
+            "role" => $request->input('role'),
+            "nama_lengkap" => $request->input('nama_lengkap'),
+            "phone" => $request->input('phone'),
+            "alamat" => $request->input('alamat'),
+            "gender" => $request->input('gender'),
+            "tanggal_hahir" => $request->input('tanggal_hahir'),
+        ]);
+        // $user = User::where('id', $id)->firstOrFail();
+        // $user->fill(\Input::all());
+        // $user->save();
+        return response()->json($updated);
     }
 }

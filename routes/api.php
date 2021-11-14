@@ -32,6 +32,7 @@ Route::group(['middleware' => ['cors']], function ($router) {
 });
 Route::group(['middleware' => ['cors','auth:sanctum']], function ($router) {
     Route::get("/user/{id}",[UserController::class, 'show']);
+    Route::post("/user/{id}/update",[UserController::class, 'update']);
     Route::post("/logout",[AuthController::class, 'logout']);
     Route::post("/user/profile-image/{id}",[UserController::class, 'profileImage']);
 });
