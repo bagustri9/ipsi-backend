@@ -26,6 +26,7 @@ class User extends Authenticatable
         'alamat',
         'gender',
         'tanggal_hahir',
+        'image',
     ];
 
     /**

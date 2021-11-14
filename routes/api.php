@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\BarangController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
@@ -29,6 +30,8 @@ Route::group(['middleware' => ['cors']], function ($router) {
     Route::post("/login",[AuthController::class, 'login']);
     Route::get("/barang",[BarangController::class, 'index']);
 });
-Route::group(['middleware' => ['auth:sanctum']], function ($router) {
+Route::group(['middleware' => ['cors','auth:sanctum']], function ($router) {
+    Route::get("/user/{id}",[UserController::class, 'show']);
     Route::post("/logout",[AuthController::class, 'logout']);
+    Route::post("/user/profile-image/{id}",[UserController::class, 'profileImage']);
 });
