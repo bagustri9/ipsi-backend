@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Peminjaman;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\URL;
 
 class PeminjamanController extends Controller
 {
@@ -35,7 +37,15 @@ class PeminjamanController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $peminjaman = Peminjaman::create([
+            'user_id' => $request->user_id,
+            "total" => $request->total,
+            "barang_jaminan" => $request->barang_jaminan,
+            "tanggal_rental" => $request->tanggal_rental,
+            "rencana_pengembalian" => $request->rencana_pengembalian,
+            "status" => $request->status,
+        ]);
+        return response()->json($peminjaman);
     }
 
     /**

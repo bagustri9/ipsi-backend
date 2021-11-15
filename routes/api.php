@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BarangController;
+use App\Http\Controllers\PeminjamanController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
@@ -29,6 +30,7 @@ Route::group(['middleware' => ['cors']], function ($router) {
     Route::get("/barang",[BarangController::class, 'index']);
     Route::post("/login",[AuthController::class, 'login']);
     Route::get("/barang",[BarangController::class, 'index']);
+    Route::post("/peminjaman",[PeminjamanController::class, 'store']);
 });
 Route::group(['middleware' => ['cors','auth:sanctum']], function ($router) {
     Route::get("/user/{id}",[UserController::class, 'show']);
