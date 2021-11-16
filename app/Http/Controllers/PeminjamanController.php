@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Peminjaman;
 use App\Models\Cart;
+use App\Models\Barang;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\URL;
@@ -17,7 +19,14 @@ class PeminjamanController extends Controller
      */
     public function index()
     {
-        //
+        $datas = Peminjaman::orderBy("id")->get();
+        foreach ($datas as $pinjam) {
+            $cart = Cart::join('barangs', 'carts.id_barang', '=', 'barangs.id')->where('carts.id_peminjaman', $pinjam->id)->get();
+            $pinjam->peminjam = User::where('id', $pinjam->user_id)->first();
+            $pinjam->cart = $cart;
+        }
+
+        return response()->json($datas);
     }
 
     /**
@@ -48,11 +57,14 @@ class PeminjamanController extends Controller
         ]);
 
         for ($i = 0; $i < count($request->cart); $i++) {
-            Cart::create([
+            
+            $cart = Cart::create([
                 "id_peminjaman" => $peminjaman->id,
                 "id_barang" => $request->cart[$i]['id'],
                 "kuantitas" =>  $request->cart[$i]['kuantitas']
             ]);
+            $barang = Barang::where('id', $cart->id_barang)->first()->kuantitas;
+            Barang::where('id', $cart->id_barang)->update(['kuantitas' => ($barang - $cart->kuantitas)]);
         }
         return response()->json($peminjaman);
     }
@@ -85,9 +97,17 @@ class PeminjamanController extends Controller
      * @param  \App\Models\Peminjaman  $peminjaman
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Peminjaman $peminjaman)
+    public function update(Request $request, $id)
     {
-        //
+        $updated = Peminjaman::find($id)->update([
+            "user_id" => $request->input('user_id'),
+            "total" => $request->input('total'),
+            "barang_jaminan" => $request->input('barang_jaminan'),
+            "tanggal_rental" => $request->input('tanggal_rental'),
+            "rencana_pengembalian" => $request->input('rencana_pengembalian'),
+            "status" => $request->input('status'),
+        ]);
+        return response()->json($updated);
     }
 
     /**
@@ -96,9 +116,11 @@ class PeminjamanController extends Controller
      * @param  \App\Models\Peminjaman  $peminjaman
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Peminjaman $peminjaman)
+    public function destroy($id)
     {
-        //
+        $deleted = Peminjaman::find($id)->delete();
+
+        return response()->json($deleted);
     }
 
     public function peminjamanByUser($user_id)
