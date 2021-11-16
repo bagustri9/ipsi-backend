@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\BarangController;
 use App\Http\Controllers\PeminjamanController;
+use App\Http\Controllers\PengembalianController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
@@ -36,6 +37,7 @@ Route::group(['middleware' => ['cors']], function ($router) {
     Route::post("/peminjaman",[PeminjamanController::class, 'store']);
     Route::get("/peminjaman/{id}",[PeminjamanController::class, 'store']);
     Route::get("/peminjaman/user/{user_id}",[PeminjamanController::class, 'peminjamanByUser']);
+    Route::post("/pengembalian",[PengembalianController::class, 'store']);
 });
 Route::group(['middleware' => ['cors','auth:sanctum']], function ($router) {
     Route::get("/user/{id}",[UserController::class, 'show']);

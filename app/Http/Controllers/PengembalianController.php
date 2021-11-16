@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Pengembalian;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\URL;
 
 class PengembalianController extends Controller
 {
@@ -35,7 +37,12 @@ class PengembalianController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $pengembalian = Pengembalian::create([
+            'peminjaman_id' => $request->peminjaman_id,
+            "pengembalian" => $request->pengembalian,
+            "denda" => $request->denda,
+        ]);
+        return response()->json($pengembalian);
     }
 
     /**

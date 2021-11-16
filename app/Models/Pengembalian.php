@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Pengembalian extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        "peminjaman_id",
+        "pengembalian",
+        "denda"
+    ];
 }
