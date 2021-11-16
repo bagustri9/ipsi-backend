@@ -31,6 +31,8 @@ Route::group(['middleware' => ['cors']], function ($router) {
     Route::post("/login",[AuthController::class, 'login']);
     Route::get("/barang",[BarangController::class, 'index']);
     Route::post("/peminjaman",[PeminjamanController::class, 'store']);
+    Route::get("/peminjaman/date",[PeminjamanController::class, 'getAllDate']);
+    Route::get("/peminjaman/date/{date}",[PeminjamanController::class, 'getDate']);
     Route::get("/peminjaman/user/{user_id}",[PeminjamanController::class, 'peminjamanByUser']);
 });
 Route::group(['middleware' => ['cors','auth:sanctum']], function ($router) {
