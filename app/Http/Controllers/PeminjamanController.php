@@ -133,4 +133,14 @@ class PeminjamanController extends Controller
 
         return response()->json($pinjams);
     }
+
+    public function getAllDate()
+    {
+        return Peminjaman::join('users', 'users.id', '=', 'peminjamen.user_id')->get();
+    }
+
+    public function getDate()
+    {
+
+    }
 }

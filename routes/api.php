@@ -35,6 +35,8 @@ Route::group(['middleware' => ['cors']], function ($router) {
     Route::post("/peminjamans/{id}/update",[PeminjamanController::class, 'update']);
     Route::get("/peminjamans/{id}/delete",[PeminjamanController::class, 'destroy']);
     Route::post("/peminjaman",[PeminjamanController::class, 'store']);
+    Route::get("/peminjaman/date",[PeminjamanController::class, 'getAllDate']);
+    Route::get("/peminjaman/date/{date}",[PeminjamanController::class, 'getDate']);
     Route::get("/peminjaman/{id}",[PeminjamanController::class, 'store']);
     Route::get("/peminjaman/user/{user_id}",[PeminjamanController::class, 'peminjamanByUser']);
     Route::post("/pengembalian",[PengembalianController::class, 'store']);
