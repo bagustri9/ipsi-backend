@@ -40,6 +40,7 @@ Route::group(['middleware' => ['cors']], function ($router) {
     Route::get("/peminjaman/{id}",[PeminjamanController::class, 'store']);
     Route::get("/peminjaman/user/{user_id}",[PeminjamanController::class, 'peminjamanByUser']);
     Route::post("/pengembalian",[PengembalianController::class, 'store']);
+    Route::get("/pengembalian",[PengembalianController::class, 'index']);
 });
 Route::group(['middleware' => ['cors','auth:sanctum']], function ($router) {
     Route::get("/user/{id}",[UserController::class, 'show']);
