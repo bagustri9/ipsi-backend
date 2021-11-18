@@ -38,6 +38,8 @@ Route::group(['middleware' => ['cors']], function ($router) {
     Route::get("/peminjaman/date/{date}", [PeminjamanController::class, 'getDate']);
     Route::get("/peminjaman/{id}", [PeminjamanController::class, 'store']);
     Route::get("/peminjaman/user/{user_id}", [PeminjamanController::class, 'peminjamanByUser']);
+    Route::post("/pengembalian",[PengembalianController::class, 'store']);
+    Route::get("/pengembalian",[PengembalianController::class, 'index']);
     Route::post('/forgot-password', [AuthController::class, 'forgotPassword']);
     Route::post('/reset-password', [AuthController::class, 'resetPassword']);
 });
