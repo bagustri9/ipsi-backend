@@ -3,7 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Pengembalian;
+use App\Models\Peminjaman;
+use App\Models\Cart;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\URL;
 
 class PengembalianController extends Controller
 {
@@ -14,7 +19,14 @@ class PengembalianController extends Controller
      */
     public function index()
     {
-        //
+        $datas = Pengembalian::orderBy("id")->get();
+
+        foreach ($datas as $pinjam) {
+            $pinjam->barang = Peminjaman::where('id', $pinjam->peminjaman_id)->first();
+            $pinjam->info = User::where('id', $pinjam->barang->user_id)->first();
+        }
+
+        return response()->json($datas);
     }
 
     /**
@@ -28,14 +40,27 @@ class PengembalianController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created resource in storag e.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        //
+        $pengembalian = Pengembalian::create([
+            'peminjaman_id' => $request->peminjaman_id,
+            "pengembalian" => $request->pengembalian,
+            "denda" => $request->denda,
+        ]);
+
+        $peminjaman = Peminjaman::findOrFail(($request->peminjaman_id));
+
+        if($peminjaman) {
+            $peminjaman->status = 2;
+            $peminjaman->save();
+        }
+        
+        return response()->json($peminjaman);
     }
 
     /**
